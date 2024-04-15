@@ -28,7 +28,7 @@ def preprocess_data(data):
     return X_train_scaled, X_test_scaled, y_train, y_test, scaler
 
 # Train the model
-@st.cache_resource
+@st.cache_data
 def train_model(X_train_scaled, X_test_scaled, y_train):
     model = RandomForestClassifier(n_estimators=100, random_state=42)
     model.fit(X_train_scaled, y_train)
