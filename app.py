@@ -59,15 +59,15 @@ def main():
         test_accuracies.append(test_accuracy)
 
     # Plot accuracy scores
-    plt.figure(figsize=(10, 6))
+    fig, ax = plt.subplots()
     epochs = np.arange(1, 11)  # Assuming 10 iterations
-    plt.plot(epochs, train_accuracies, label='Training Accuracy')
-    plt.plot(epochs, test_accuracies, label='Testing Accuracy')
-    plt.xlabel('Epochs')
-    plt.ylabel('Accuracy')
-    plt.title('Accuracy Comparison: Training vs Testing')
-    plt.legend()
-    st.pyplot()
+    ax.plot(epochs, train_accuracies, label='Training Accuracy')
+    ax.plot(epochs, test_accuracies, label='Testing Accuracy')
+    ax.set_xlabel('Epochs')
+    ax.set_ylabel('Accuracy')
+    ax.set_title('Accuracy Comparison: Training vs Testing')
+    ax.legend()
+    st.pyplot(fig)
     
     
     st.sidebar.subheader('User Input')
