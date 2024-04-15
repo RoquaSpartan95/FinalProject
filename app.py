@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import accuracy_score, classification_report, r2_score
 
 # Load the dataset
 @st.cache
@@ -40,8 +40,34 @@ def main():
     data = load_data()
     # Preprocess data
     X_train_scaled, X_test_scaled, y_train, y_test, scaler = preprocess_data(data)  # Retrieve scaler
-    # Train model
-    model = train_model(X_train_scaled, X_test_scaled, y_train)
+    
+    # Lists to store accuracy scores
+    train_accuracies = []
+    test_accuracies = []
+
+    for _ in range(10):  # 10 iterations for example
+        # Train model
+        model = train_model(X_train_scaled, X_test_scaled, y_train)
+        # Evaluate on training data
+        train_pred = model.predict(X_train_scaled)
+        train_accuracy = accuracy_score(y_train, train_pred)
+        train_accuracies.append(train_accuracy)
+        # Evaluate on testing data
+        test_pred = model.predict(X_test_scaled)
+        test_accuracy = accuracy_score(y_test, test_pred)
+        test_accuracies.append(test_accuracy)
+
+    # Plot accuracy scores
+    plt.figure(figsize=(10, 6))
+    epochs = np.arange(1, 11)  # Assuming 10 iterations
+    plt.plot(epochs, train_accuracies, label='Training Accuracy')
+    plt.plot(epochs, test_accuracies, label='Testing Accuracy')
+    plt.xlabel('Epochs')
+    plt.ylabel('Accuracy')
+    plt.title('Accuracy Comparison: Training vs Testing')
+    plt.legend()
+    st.pyplot()
+    
     
     st.sidebar.subheader('User Input')
     # Collect user input features
@@ -59,22 +85,16 @@ def main():
         else:
             st.write('Sorry! The model predicts that you will not get placed.')
 
-    # Visualization: Placement vs GPA, work experience, and education level
-    st.subheader('Placement vs GPA, Work Experience, and Education Level')
+    # Evaluation metrics
+    y_pred = model.predict(X_test_scaled)
+    accuracy = accuracy_score(y_test, y_pred)
+    r2 = r2_score(y_test, y_pred)
+    classification_rep = classification_report(y_test, y_pred)
 
-    # Group data by GPA, work experience, and education level and calculate placement rate
-    placement_rates = data.groupby(['gpa', 'work_experience', 'education_level'])['placement'].mean().reset_index()
-
-    # Plot
-    fig, axes = plt.subplots(3, 1, figsize=(10, 15))
-
-    for i, feature in enumerate(['gpa', 'work_experience', 'education_level']):
-        ax = axes[i]
-        ax.scatter(placement_rates[feature], placement_rates['placement'])
-        ax.set_xlabel(feature)
-        ax.set_ylabel('Placement Rate')
-
-    st.pyplot(fig)
+    st.write(f'Accuracy: {accuracy}')
+    st.write(f'R2 Score: {r2}')
+    st.write('Classification Report:')
+    st.write(classification_rep)
 
 if __name__ == '__main__':
     main()
