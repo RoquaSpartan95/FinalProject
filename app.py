@@ -61,11 +61,11 @@ def main():
     # Plot accuracy scores
     fig, ax = plt.subplots()
     epochs = np.arange(1, 11)  # Assuming 10 iterations
-    
-    ax.plot(epochs, test_accuracies, label='Testing Accuracy')
+    ax.plot(epochs, train_accuracies, label='Training Accuracy',color='blue')
+    ax.plot(epochs, test_accuracies, label='Testing Accuracy',color='red')
     ax.set_xlabel('Epochs')
     ax.set_ylabel('Accuracy')
-    ax.set_title('Accuracy Testing')
+    ax.set_title('Accuracy of Training v/s Testing')
     ax.legend()
     st.pyplot(fig)
     
