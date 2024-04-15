@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, classification_report, r2_score
 
 # Load the dataset
-@st.cache
+@st.cache_data
 def load_data():
     return pd.read_csv('job_placement.csv')  # Update with your dataset
 
@@ -28,7 +28,7 @@ def preprocess_data(data):
     return X_train_scaled, X_test_scaled, y_train, y_test, scaler
 
 # Train the model
-@st.cache
+@st.cache_resource
 def train_model(X_train_scaled, X_test_scaled, y_train):
     model = RandomForestClassifier(n_estimators=100, random_state=42)
     model.fit(X_train_scaled, y_train)
