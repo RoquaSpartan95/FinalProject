@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, classification_report,r2_score
+from sklearn.metrics import accuracy_score, classification_report,r2_score,mean_absolute_error, mean_squared_error, f1_score
 
 # Load the dataset
 @st.cache_data
@@ -89,9 +89,15 @@ def main():
     # Evaluation metrics
     y_pred = model.predict(X_test_scaled)
     accuracy = accuracy_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred)  # F1-score
+    mae = mean_absolute_error(y_test, y_pred)  # Mean Absolute Error
+    mse = mean_squared_error(y_test, y_pred)  # Mean Squared Error
     r2 = r2_score(y_test, y_pred)
     
     st.write(f'Accuracy: {accuracy}')
+    st.write(f'F1 Score: {f1}')
+    st.write(f'Mean Absolute Error: {mae}')
+    st.write(f'Mean Squared Error: {mse}')
     st.write(f'R2 Score: {r2}')
     
     
