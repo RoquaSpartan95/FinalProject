@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score,r2_score,mean_absolute_error, mean_squared_error, f1_score
+from sklearn.metrics import accuracy_score, r2_score, mean_absolute_error, mean_squared_error, f1_score
 
 # Load the dataset
 @st.cache_data
