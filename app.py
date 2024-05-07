@@ -61,6 +61,7 @@ def main():
         user_input[feature] = st.sidebar.number_input(f'Enter {feature}', min_value=0, max_value=100)
 
     # Make predictions
+    st.write('Prediction:')
     if st.sidebar.button('Predict'):
         user_data = pd.DataFrame([user_input])
         scaled_user_data = scaler.transform(user_data)
