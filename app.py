@@ -1,11 +1,11 @@
 import numpy as np
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, r2_score, mean_absolute_error, mean_squared_error, f1_score
+from PIL import Image
+
 
 # Load the dataset
 @st.cache_data
@@ -36,6 +36,8 @@ def train_model(X_train_scaled, X_test_scaled, y_train):
 
 # Main function to run the Streamlit app
 def main():
+    img = Image.open('Job-Placement-Agency.jpg')
+    st.image(img,width=650)
     st.title('Job Placement Prediction Model')
     # Load data
     data = load_data()
