@@ -42,32 +42,14 @@ def main():
     # Preprocess data
     X_train_scaled, X_test_scaled, y_train, y_test, scaler = preprocess_data(data)  # Retrieve scaler
     
-    # Lists to store accuracy scores
-    train_accuracies = []
-    test_accuracies = []
 
     for _ in range(10):  # 10 iterations for example
         # Train model
         model = train_model(X_train_scaled, X_test_scaled, y_train)
         # Evaluate on training data
         train_pred = model.predict(X_train_scaled)
-        train_accuracy = accuracy_score(y_train, train_pred)
-        train_accuracies.append(train_accuracy)
         # Evaluate on testing data
         test_pred = model.predict(X_test_scaled)
-        test_accuracy = accuracy_score(y_test, test_pred)
-        test_accuracies.append(test_accuracy)
-
-   # Plot accuracy scores
-    fig, ax = plt.subplots(figsize=(10, 6))  # Create a single figure with the desired size
-    epochs = np.arange(1, 11)  # Assuming 10 iterations
-    ax.plot(epochs, train_accuracies, label='Training Accuracy')  # Use ax.plot instead of plt.plot
-    ax.plot(epochs, test_accuracies, label='Testing Accuracy')  # Use ax.plot instead of plt.plot
-    ax.set_xlabel('Epochs')  # Use ax.set_xlabel instead of plt.xlabel
-    ax.set_ylabel('Accuracy')  # Use ax.set_ylabel instead of plt.ylabel
-    ax.set_title('Accuracy Comparison: Training vs Testing')  # Use ax.set_title instead of plt.title
-    ax.legend()  # Use ax.legend instead of plt.legend
-    st.pyplot(fig)  # Pass the figure to st.pyplot
 
 
     st.sidebar.subheader('User Input')
@@ -85,21 +67,6 @@ def main():
             st.write('Congratulations! The model predicts that you will get placed.')
         else:
             st.write('Sorry! The model predicts that you will not get placed.')
-
-    # Evaluation metrics
-    y_pred = model.predict(X_test_scaled)
-    accuracy = accuracy_score(y_test, y_pred)
-    f1 = f1_score(y_test, y_pred)  # F1-score
-    mae = mean_absolute_error(y_test, y_pred)  # Mean Absolute Error
-    mse = mean_squared_error(y_test, y_pred)  # Mean Squared Error
-    r2 = r2_score(y_test, y_pred)
-    
-    st.write(f'Accuracy: {accuracy}')
-    st.write(f'F1 Score: {f1}')
-    st.write(f'Mean Absolute Error: {mae}')
-    st.write(f'Mean Squared Error: {mse}')
-    st.write(f'R2 Score: {r2}')
-    
     
 if __name__ == '__main__':
     main()
